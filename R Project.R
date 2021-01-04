@@ -54,11 +54,11 @@ ggplot(g, aes(sample=.resid))+
 
 #check randomness of residuals
 ggplot(g, aes(.fitted,.resid)) +
-  geom_point() + geom_abline(h=0)+
+  geom_point() + geom_hline(yintercept=0, linetype="dashed", color = "red")+
   labs(title="Residuals vs Fitted values", subtitle="iOS Face Recognition", y="Residuals", x="Fitted Values")
 
 ggplot(g, aes(c(treatment),.resid))+
-  geom_point() + geom_abline()+
+  geom_point() + geom_hline(yintercept=0, linetype="dashed", color = "red")+
   labs(title="Residuals vs Treatment", subtitle="iOS Face Recognition", y="Residuals", x="Treatment")
 
 #There are no patterns in the residual plots - all of the
@@ -70,16 +70,18 @@ ggplot(g, aes(c(treatment),.resid))+
 #Create boxplots to give us an idea of the distributions between the
 #different covers and between the different light intensities.
 
-#Boxplot1: different covers
-ggplot(data,aes(x=treatment,y=y))+
-  geom_boxplot()+
-  labs(title="Success Rate vs Type of Cover", subtitle="iOS Face Recognition", y="Success Rate", x="Type of Cover")
-  
+#Boxplot1: light intensity (block)
 ggplot(data,aes(x=blocks,y=y))+
   geom_boxplot()+
   labs(title="Success Rate vs Light Intensity",subtitle="iOS Face Recognition", y="Success Rate", x="Light Intensity")
+#This reaffirms that there are no block effects at the 5% significance level.
 
-#Both our calculation of sample means and our boxplot suggest that the success rate of
+
+#Boxplot2: different covers
+ggplot(data,aes(x=treatment,y=y))+
+  geom_boxplot()+
+  labs(title="Success Rate vs Type of Cover", subtitle="iOS Face Recognition", y="Success Rate", x="Type of Cover")
+#Boxplot2 suggest that the success rate of
 #both sunglasses and no_cover is far higher than with mask.
 #We are going to confirm this with a formal Tukey multiple comparisons test.
 
